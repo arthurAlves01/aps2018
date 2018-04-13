@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class SocketCliente {
+public class SocketCliente implements Runnable{
 
     private String host;
     private int porta;
@@ -16,11 +16,19 @@ public class SocketCliente {
         this.porta = porta;
     }
 
-    public void executa() throws UnknownHostException, IOException {
-        try(Socket cliente = new Socket(this.host, this.porta);
-            Scanner teclado = new Scanner(System.in);
-            PrintStream saida = new PrintStream(cliente.getOutputStream())) {
-            System.out.println("O cliente se conectou ao servidor!");
+    private Socket cliente;
+    private Scanner teclado;
+    private PrintStream saida;
+
+    public void enviarMensagem(String msg) {
+        saida.println(msg);
+    }
+    public void run() {
+        try {
+            cliente = new Socket(this.host, this.porta);
+            teclado = new Scanner(System.in);
+            saida = new PrintStream(cliente.getOutputStream());
+            System.out.println("Conectado ao servidor utilizando a porta " + cliente.getLocalPort());
 
             TratadorMensagem r = new TratadorMensagem(cliente.getInputStream());
             new Thread(r).start();
@@ -28,6 +36,12 @@ public class SocketCliente {
             while (teclado.hasNextLine()) {
                 saida.println(teclado.nextLine());
             }
+
+        } catch (UnknownHostException eHost) {
+            eHost.printStackTrace();
+        } catch (IOException eIO) {
+            eIO.printStackTrace();
         }
     }
+
 }
