@@ -1,6 +1,8 @@
 package pkCliente;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -10,6 +12,8 @@ public class SocketCliente implements Runnable{
 
     private String host;
     private int porta;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
 
     public SocketCliente(String host, int porta) {
         this.host = host;
@@ -21,11 +25,19 @@ public class SocketCliente implements Runnable{
     private PrintStream saida;
 
     public void enviarMensagem(String msg) {
-        saida.println(msg);
+        try {
+            //saida.println(msg);
+            out.writeObject(msg);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void run() {
         try {
             cliente = new Socket(this.host, this.porta);
+            out = new ObjectOutputStream(cliente.getOutputStream());
+            in = new ObjectInputStream(cliente.getInputStream());
             teclado = new Scanner(System.in);
             saida = new PrintStream(cliente.getOutputStream());
             System.out.println("Conectado ao servidor utilizando a porta " + cliente.getLocalPort());
