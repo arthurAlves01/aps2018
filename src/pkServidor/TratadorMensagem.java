@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 class TratadorMensagem implements Runnable {
 
@@ -13,26 +12,32 @@ class TratadorMensagem implements Runnable {
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
-    public TratadorMensagem(Socket cliente, SocketServidor servidor) {
+    public TratadorMensagem(Socket cliente, SocketServidor servidor) throws IOException {
         this.cliente = cliente;
         this.servidor = servidor;
+        out = new ObjectOutputStream(this.cliente.getOutputStream());
+        in = new ObjectInputStream(this.cliente.getInputStream());
     }
-
-    public void run() {
+    public void manda(String msg) {
         try {
-            //Scanner s = new Scanner(this.cliente.getInputStream());
-            out = new ObjectOutputStream(this.cliente.getOutputStream());
-            in = new ObjectInputStream(this.cliente.getInputStream());
-            String m = (String) in.readObject();
-            while (true) {
-                servidor.distribuiMensagem(this.cliente, /*s.nextLine()*/m, this.cliente.getPort());
-                //in.flush();
-                in.close();
+            this.out.writeObject(msg);
+        } catch (IOException ioe) {
+            System.out.println("Erro ao enviar mensagem!");
+        }
+    }
+    public void run() {
+        while(true) {
+            try {
+                Object m = in.readObject();
+                servidor.distribuiMensagem(this, /*s.nextLine()*/(String) m, this.cliente.getPort());
+                //in.reset();
+            } catch (IOException e) {
+                //e.printStackTrace();
+                System.out.println("O cliente desconectou!");
+                break;
+            } catch (ClassNotFoundException e) {
+                //e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

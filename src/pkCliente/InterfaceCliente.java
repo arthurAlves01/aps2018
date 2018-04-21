@@ -52,7 +52,8 @@ public class InterfaceCliente implements Runnable, ActionListener, WindowListene
         janela.revalidate();
     }
     public void actionPerformed(ActionEvent e) {
-        RodaCliente.enviaMensagemParaSocket(inputBox.getText());
+        if(!inputBox.getText().equals(""))
+            RodaCliente.enviaMensagemParaSocket(inputBox.getText());
         inputBox.setText("");
     }
 
