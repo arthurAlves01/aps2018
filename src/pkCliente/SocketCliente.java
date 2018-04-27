@@ -1,5 +1,7 @@
 package pkCliente;
 
+import pkAux.Mensagem;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,11 +10,12 @@ import java.net.UnknownHostException;
 
 public class SocketCliente implements Runnable{
 
-    private String host;
-    private int porta;
+    private String hostServidor;
+    private int portaServidor;
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Socket cliente;
+    private String nomeCliente;
 
     public ObjectInputStream getIn() {
         return in;
@@ -22,13 +25,22 @@ public class SocketCliente implements Runnable{
         return out;
     }
 
-    public SocketCliente(String host, int porta) {
-        this.host = host;
-        this.porta = porta;
+    public SocketCliente(String host, int porta, String nome) {
+        this.hostServidor = host;
+        this.portaServidor = porta;
+        this.nomeCliente = nome;
     }
-
-    public void enviarMensagem(String msg) {
+    public void enviaDadosConn() {
         try {
+            out.writeObject(this.nomeCliente);
+            System.out.println(this.nomeCliente);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+    public void enviarMensagem(Mensagem msg) {
+        try {
+            System.out.println((String)msg.getMensagem());
             out.writeObject(msg);
             //out.reset();
         } catch (IOException e) {
@@ -37,18 +49,17 @@ public class SocketCliente implements Runnable{
     }
     public void run() {
         try {
-            cliente = new Socket(this.host, this.porta);
+            cliente = new Socket(this.hostServidor, this.portaServidor);
             out = new ObjectOutputStream(cliente.getOutputStream());
             in = new ObjectInputStream(cliente.getInputStream());
             System.out.println("Conectado ao servidor utilizando a porta " + cliente.getLocalPort());
-
-            TratadorMensagem r = new TratadorMensagem(this);
+            this.enviaDadosConn();
+            TratadorMsgServidor r = new TratadorMsgServidor(this);
             new Thread(r).start();
-
         } catch (UnknownHostException eHost) {
             eHost.printStackTrace();
-        } catch (IOException eIO) {
-            eIO.printStackTrace();
+        } catch (IOException eio) {
+            eio.printStackTrace();
         }
     }
 

@@ -1,22 +1,20 @@
 package pkServidor;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import pkAux.*;
 
 public class SocketServidor {
 
     private int porta;
-    private List<TratadorMensagem> clientes;
+    private HashMap<String, ConnCliente> clientes;
 
     public SocketServidor(int porta) {
         this.porta = porta;
-        this.clientes = new ArrayList<>();
+        this.clientes = new HashMap<>();
     }
 
     public void executa() throws IOException  {
@@ -28,18 +26,39 @@ public class SocketServidor {
                 System.out.println("Nova conexão com o cliente " +
                         cliente.getInetAddress().getHostAddress() + " na porta " + cliente.getPort());
 
-                TratadorMensagem tc = new TratadorMensagem(cliente, this);
-                this.clientes.add(tc);
+                ConnCliente tc = new ConnCliente(cliente, this);
                 new Thread(tc).start();
             }
         }
     }
-
-    public void distribuiMensagem(TratadorMensagem clienteQueEnviou, String msg, int porta) {
-        for (TratadorMensagem cliente : this.clientes) {
-            if(!cliente.equals(clienteQueEnviou)){
-                cliente.manda(msg);
-            }
+    public void enviarMensagemParaCliente(Mensagem msg) {
+        ConnCliente dest = this.clientes.get(msg.getDestino());
+        if(dest!=null) {
+            dest.enviarMensagem(msg);
         }
+    }
+    public boolean inserirUsuario(ConnCliente socket, String nomeUsuario) {
+        if(this.clientes.get(nomeUsuario)==null) {
+            this.clientes.put(nomeUsuario, socket);
+            this.atualizaListaCliente();
+            return true;
+        }
+        return false;
+    }
+
+    public void atualizaListaCliente() {
+        ArrayList<String> connAtivas = new ArrayList<>();
+        Iterator lista = this.clientes.entrySet().iterator();
+        while(lista.hasNext()) {
+            Map.Entry item = (Map.Entry)lista.next();
+            connAtivas.add(item.getKey().toString());
+        }
+    }
+    public void enviarListaParaClientes() {
+
+    }
+    public ConnCliente excluiCliente(ConnCliente cliente) {
+        this.clientes.remove(cliente.getNomeUsuario());
+        return cliente;
     }
 }

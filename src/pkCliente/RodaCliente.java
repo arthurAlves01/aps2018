@@ -1,26 +1,37 @@
 package pkCliente;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
-
+import pkAux.*;
 
 public class RodaCliente {
     static private InterfaceCliente cl1;
     static private SocketCliente sk1;
-    public static void main(String[] args) throws UnknownHostException,	IOException {
-        Thread threadSocket, threadInterface;
-        cl1 = new InterfaceCliente();
-        sk1 = new SocketCliente("127.0.0.1", 12345);
-        threadSocket = new Thread(sk1, "conexao");
-        threadSocket.start();
+    static private boolean estadoConn;
 
+    public static void main(String[] args) {
+        Thread threadInterface;
+        cl1 = new InterfaceCliente();
         threadInterface = new Thread(cl1, "interface");
         threadInterface.start();
     }
-    public static void enviaParaInterface(String msg) {
+
+    public static void estabelecerConn(String host, int porta, String usuario) {
+        if(!getEstadoConn()) {
+            Thread threadSocket;
+            sk1 = new SocketCliente(host, porta, usuario);
+            estadoConn = true;
+            threadSocket = new Thread(sk1, "conexao");
+            threadSocket.start();
+        }
+    }
+
+    public static boolean getEstadoConn() {
+        return estadoConn;
+    }
+
+    public static void enviaParaInterface(Mensagem msg) {
         cl1.mostraMensagem(msg);
     }
-    public static void enviaMensagemParaSocket(String msg) {
+    public static void enviaMensagemParaSocket(Mensagem msg) {
         sk1.enviarMensagem(msg);
     }
 }

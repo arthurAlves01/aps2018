@@ -1,17 +1,15 @@
 package pkCliente;
 
-import com.sun.org.apache.xml.internal.security.utils.JDKXPathAPI;
-import org.omg.CORBA.INTERNAL;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import pkAux.*;
 
 public class InterfaceCliente implements Runnable, ActionListener, WindowListener {
     private JFrame janela;
     private JPanel conteudo;
     private JTextField inputBox;
-    private JButton enviar;
+    private JButton enviar, conectar;
     private JScrollPane scrollMsg;
     private JPanel telaDeMensagens;
 
@@ -32,6 +30,9 @@ public class InterfaceCliente implements Runnable, ActionListener, WindowListene
         enviar = new JButton("Enviar");
         enviar.addActionListener(this);
 
+        conectar = new JButton("Conectar");
+        conectar.addActionListener(this);
+
         telaDeMensagens = new JPanel();
         telaDeMensagens.setLayout(new BoxLayout(telaDeMensagens, BoxLayout.PAGE_AXIS));
         scrollMsg = new JScrollPane(telaDeMensagens);
@@ -40,21 +41,30 @@ public class InterfaceCliente implements Runnable, ActionListener, WindowListene
         conteudo.add(scrollMsg);
         conteudo.add(inputBox);
         conteudo.add(enviar);
+        conteudo.add(conectar);
 
         janela.add(conteudo);
         janela.setVisible(true);
     }
-    public void mostraMensagem(String msg) {
-        JLabel mensagem = new JLabel(msg);
+    public void mostraMensagem(Mensagem msg) {
+        JLabel mensagem = new JLabel((String) msg.getMensagem());
         telaDeMensagens.add(mensagem);
         scrollMsg.getVerticalScrollBar().setValue(scrollMsg.getVerticalScrollBar().getMaximum());
         janela.repaint();
         janela.revalidate();
     }
     public void actionPerformed(ActionEvent e) {
-        if(!inputBox.getText().equals(""))
-            RodaCliente.enviaMensagemParaSocket(inputBox.getText());
-        inputBox.setText("");
+        if(e.getActionCommand().equals("Enviar")) {
+            if (!inputBox.getText().equals("")) {
+                RodaCliente.enviaMensagemParaSocket(new Mensagem(inputBox.getText()));
+                inputBox.setText("");
+            } else {
+                if (!RodaCliente.getEstadoConn())
+                    System.out.println("Você não está conectado!");
+            }
+        } else if(e.getActionCommand().equals("Conectar")) {
+            RodaCliente.estabelecerConn("127.0.0.1", 12345, "Eu");
+        }
     }
 
     public void windowClosing(WindowEvent e) {
