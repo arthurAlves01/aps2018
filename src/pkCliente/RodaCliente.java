@@ -3,6 +3,7 @@ package pkCliente;
 import pkAux.*;
 
 import java.io.IOException;
+import java.util.TooManyListenersException;
 
 public class RodaCliente {
     static private InterfaceCliente cl1;
@@ -41,6 +42,9 @@ public class RodaCliente {
     public static void encerrarConn() {
         try {
             sk1.getSocket().close();
+            Mensagem dc = new Mensagem(TipoMensagem.DC);
+            enviaMensagemParaSocket(dc);
+            System.out.println("Desconectado com sucesso!");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

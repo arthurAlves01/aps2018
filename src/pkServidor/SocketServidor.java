@@ -23,9 +23,6 @@ public class SocketServidor {
 
             while (true) {
                 Socket cliente = servidor.accept();
-                System.out.println("Nova conexão com o cliente " +
-                        cliente.getInetAddress().getHostAddress() + " na porta " + cliente.getPort());
-
                 ConnCliente tc = new ConnCliente(cliente, this);
                 new Thread(tc).start();
             }

@@ -21,7 +21,6 @@ class TratadorMsgServidor implements Runnable {
         while(true) {
             try {
                 msg = (Mensagem) inServidor.readObject();
-                System.out.println(msg.getTipoMsg());
                 if(msg.getTipoMsg()==TipoMensagem.CONN_OK) {
                     System.out.println("Conectado ao servidor!");
                     break;
