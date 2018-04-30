@@ -54,6 +54,10 @@ public class InterfaceCliente implements Runnable, ActionListener, WindowListene
         janela.revalidate();
     }
     public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("Conectar")) {
+            if(RodaCliente.getEstadoConn()) return;
+            RodaCliente.estabelecerConn("127.0.0.1", 12345, "Eu");
+        }
         if(e.getActionCommand().equals("Enviar")) {
             if (!inputBox.getText().equals("")) {
                 RodaCliente.enviaMensagemParaSocket(new Mensagem(inputBox.getText()));
@@ -62,8 +66,8 @@ public class InterfaceCliente implements Runnable, ActionListener, WindowListene
                 if (!RodaCliente.getEstadoConn())
                     System.out.println("Você não está conectado!");
             }
-        } else if(e.getActionCommand().equals("Conectar")) {
-            RodaCliente.estabelecerConn("127.0.0.1", 12345, "Eu");
+        } else {
+
         }
     }
 

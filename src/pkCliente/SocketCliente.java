@@ -1,6 +1,7 @@
 package pkCliente;
 
 import pkAux.Mensagem;
+import pkAux.TipoMensagem;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,7 +16,7 @@ public class SocketCliente implements Runnable{
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Socket cliente;
-    private String nomeCliente;
+    private String nomeUsuario;
 
     public ObjectInputStream getIn() {
         return in;
@@ -25,15 +26,19 @@ public class SocketCliente implements Runnable{
         return out;
     }
 
+    public Socket getSocket() {
+        return cliente;
+    }
+
     public SocketCliente(String host, int porta, String nome) {
         this.hostServidor = host;
         this.portaServidor = porta;
-        this.nomeCliente = nome;
+        this.nomeUsuario = nome;
     }
     public void enviaDadosConn() {
         try {
-            out.writeObject(this.nomeCliente);
-            System.out.println(this.nomeCliente);
+            out.writeObject(new Mensagem(this.nomeUsuario, TipoMensagem.REQ_CONN));
+            System.out.println(this.nomeUsuario);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -52,8 +57,7 @@ public class SocketCliente implements Runnable{
             cliente = new Socket(this.hostServidor, this.portaServidor);
             out = new ObjectOutputStream(cliente.getOutputStream());
             in = new ObjectInputStream(cliente.getInputStream());
-            System.out.println("Conectado ao servidor utilizando a porta " + cliente.getLocalPort());
-            this.enviaDadosConn();
+            System.out.println("Tentando estabeler conexão com o servidor: " + cliente.getLocalPort());
             TratadorMsgServidor r = new TratadorMsgServidor(this);
             new Thread(r).start();
         } catch (UnknownHostException eHost) {
@@ -62,5 +66,7 @@ public class SocketCliente implements Runnable{
             eio.printStackTrace();
         }
     }
-
+    public String getNomeCliente() {
+        return this.nomeUsuario;
+    }
 }

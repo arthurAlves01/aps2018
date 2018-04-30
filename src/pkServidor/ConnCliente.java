@@ -15,6 +15,7 @@ public class ConnCliente implements Runnable {
     private ObjectOutputStream out;
     private ArrayList<ConnCliente> connAtivas;
     private String nomeUsuario;
+    private boolean statusConn;
 
     public ConnCliente(Socket cliente, SocketServidor servidor) throws IOException {
         this.cliente = cliente;
@@ -38,25 +39,43 @@ public class ConnCliente implements Runnable {
         Mensagem curMsg;
         while(true) {
             try {
+                Mensagem msgUser = (Mensagem) in.readObject();
+                if(msgUser.getTipoMsg()==TipoMensagem.REQ_CONN&&servidor.inserirUsuario(this, msgUser.getOrigem())) {
+                    System.out.println("Recebendo dados do cliente.");
+                    this.nomeUsuario = (String) msgUser.getMensagem();
+                    Mensagem resposta = new Mensagem(TipoMensagem.CONN_OK);
+                    this.enviarMensagem(resposta);
+                    System.out.println(resposta.getTipoMensagem());
+                    statusConn = true;
+                    break;
+                } else {
+                    this.enviarMensagem(new Mensagem(TipoMensagem.DC));
+                    this.cliente.close();
+                }
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(statusConn);
+        while(statusConn) {
+            try {
                 Object inMsg = in.readObject();
                 if(inMsg.getClass().getName().equals("pkAux.Mensagem")) {
                     curMsg = (Mensagem) inMsg;
-                    //servidor.enviarMensagemParaCliente(curMsg);
                     System.out.println(curMsg.getMensagem());
-                } else if(inMsg.getClass().getName().equals("java.lang.String")) {
-                    if(servidor.inserirUsuario(this, (String)inMsg)) {
-                        this.nomeUsuario = (String) inMsg;
-                    }
                 }
-
-                //in.reset();
             } catch (IOException e) {
-                //e.printStackTrace();
-                servidor.excluiCliente(this);
-                System.out.println("O cliente desconectou " + this.getNomeUsuario() + "!");
+                e.printStackTrace();
+                System.out.println("Erro de IO com o cliente: " + this.cliente.getPort());
+                this.servidor.excluiCliente(this);
                 break;
             } catch (ClassNotFoundException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
+                System.out.println("Erro de Classe Não Encontratada com o cliente: " + this.cliente.getPort());
+                this.servidor.excluiCliente(this);
+                break;
             }
         }
     }

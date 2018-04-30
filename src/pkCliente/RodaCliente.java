@@ -2,6 +2,8 @@ package pkCliente;
 
 import pkAux.*;
 
+import java.io.IOException;
+
 public class RodaCliente {
     static private InterfaceCliente cl1;
     static private SocketCliente sk1;
@@ -23,7 +25,9 @@ public class RodaCliente {
             threadSocket.start();
         }
     }
-
+    public static void setEstadoConn() {
+        estadoConn = !estadoConn;
+    }
     public static boolean getEstadoConn() {
         return estadoConn;
     }
@@ -33,5 +37,12 @@ public class RodaCliente {
     }
     public static void enviaMensagemParaSocket(Mensagem msg) {
         sk1.enviarMensagem(msg);
+    }
+    public static void encerrarConn() {
+        try {
+            sk1.getSocket().close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 }

@@ -1,16 +1,18 @@
 package pkAux;
 
+import jdk.internal.cmm.SystemResourcePressureImpl;
 import pkServidor.*;
 
 import java.awt.*;
 import java.io.Serializable;
 
 public class Mensagem implements Serializable {
+    private String origem;
     private String destino;
-    private String tipoMensagem;
+    private TipoMensagem tipoMensagem;
     private Object conteudoMensagem;
 
-    public String getTipoMsg() {
+    public TipoMensagem getTipoMsg() {
         return this.tipoMensagem;
     }
     public Object getMensagem() {
@@ -19,17 +21,33 @@ public class Mensagem implements Serializable {
     public String getDestino() {
         return this.destino;
     }
+
     public Mensagem(Object conteudoMensagem) {
         this.conteudoMensagem = conteudoMensagem;
     }
-    public Mensagem(String destino, String texto) {
+
+    public Mensagem(String nomeUsuario, TipoMensagem tpMsg) {
+        this.origem = nomeUsuario;
+        this.tipoMensagem = tpMsg;
+    }
+    public Mensagem(String origem, String destino, String texto, TipoMensagem tpMsg) {
+        this.origem = origem;
         this.destino = destino;
-        this.tipoMensagem = "texto";
+        this.tipoMensagem = TipoMensagem.TEXTO;
         this.conteudoMensagem = texto;
     }
-    public Mensagem(String destino, Image img) {
+    public Mensagem(String origem, String destino, Image img, TipoMensagem tpMsg) {
+        this.origem = origem;
         this.destino = destino;
-        this.tipoMensagem = "img";
+        this.tipoMensagem = TipoMensagem.IMG;
         this.conteudoMensagem = img;
     }
+    public Mensagem(TipoMensagem tpMsg) {
+        this.tipoMensagem = tpMsg;
+    }
+    public String getOrigem() {
+        return origem;
+    }
+
+    public TipoMensagem getTipoMensagem() { return this.tipoMensagem; }
 }
