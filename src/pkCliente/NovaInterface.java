@@ -1,7 +1,15 @@
 package pkCliente;
 
 
+import Servidor.ConnCliente;
 import pkAux.Mensagem;
+import pkAux.TipoMensagem;
+import Cliente.TratadorMsgServidor;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileInputStream;
 
 
 public class NovaInterface extends javax.swing.JFrame implements Runnable  {
@@ -14,7 +22,7 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable  {
 
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -39,6 +47,12 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable  {
         btnConectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConectarActionPerformed(evt);
+            }
+        });
+
+        btnAnexar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnexarActionPerformed(evt);
             }
         });
 
@@ -173,23 +187,54 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable  {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
+    static boolean std = true;    //criacao da variavel que vai receber o parametro
 
-    private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {
-        RodaCliente.estabelecerConn("127.0.0.1", 12345, this.nomeConectar.getText());
+    public static boolean estado(boolean partstd) {
+        std = partstd; //atribuicao do parametro para a variavel
+        return std;
     }
+    private void btnConectarActionPerformed(ActionEvent evt) {
+        RodaCliente.estabelecerConn("127.0.0.1", 12345, this.nomeConectar.getText());
+        if (estado(true)){   //Testa se a conexao foi estabelecida
+            btnDesconectar.setEnabled(true);  //habilita o botao desconectar
+            btnConectar.setEnabled(false);   //desabilita o botao conectar
+        }
+    }
+
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {
         RodaCliente.enviaMensagemParaSocket(new Mensagem(txtEnviar.getText()));
+
     }
 
     private void btnDesconectarActionPerformed(java.awt.event.ActionEvent evt) {
-        RodaCliente.encerrarConn();
+        //Cria a caixa de diálogo em caso de clique do botão desconectar do servidor
+        int opt=JOptionPane.showConfirmDialog(this, "Deseja realmente desconectar do Servidor?",
+                "Desconectar",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (opt==0) {   //Dialogo em caso de confirmacao
+            RodaCliente.encerrarConn();
+            JOptionPane.showMessageDialog(this, "Servidor desconectado!");
+        }
     }
     public void run() {
         new NovaInterface().setVisible(true);
     }
-    // Variables declaration - do not modify                     
+    private void btnAnexarActionPerformed(java.awt.event.ActionEvent evt) {
+
+        JFileChooser chooser = new JFileChooser(); //Instancia da classe JFileChooser para adicionar um objeto do computador
+        chooser.showOpenDialog(null);
+        File f=chooser.getSelectedFile();
+        String filename=f.getAbsolutePath();
+        txtEnviar.setText(filename);
+
+
+
+
+    }
+
+    // Variables declaration - do not modify
     private javax.swing.JButton btnAnexar;
     private javax.swing.JButton btnConectar;
     private javax.swing.JButton btnDesconectar;
@@ -203,7 +248,7 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable  {
     private javax.swing.JTextField nomeConectar;
     private javax.swing.JTextArea txtAreareceber;
     private javax.swing.JTextArea txtEnviar;
-    // End of variables declaration                   
+    // End of variables declaration
 
     void mostraMensagem(Mensagem msg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
