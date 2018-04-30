@@ -5,5 +5,6 @@ public enum TipoMensagem {
     IMG,
     REQ_CONN,
     DC,
-    CONN_OK
+    CONN_OK,
+    LISTA_CLIENTES
 }

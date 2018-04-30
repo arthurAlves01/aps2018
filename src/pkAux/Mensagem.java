@@ -1,8 +1,7 @@
 package pkAux;
 
-import jdk.internal.cmm.SystemResourcePressureImpl;
 import pkServidor.*;
-
+import java.util.*;
 import java.awt.*;
 import java.io.Serializable;
 
@@ -25,7 +24,9 @@ public class Mensagem implements Serializable {
     public Mensagem(Object conteudoMensagem) {
         this.conteudoMensagem = conteudoMensagem;
     }
+    public Mensagem(ArrayList<ConnCliente> clienteAtivos) {
 
+    }
     public Mensagem(String nomeUsuario, TipoMensagem tpMsg) {
         this.origem = nomeUsuario;
         this.tipoMensagem = tpMsg;

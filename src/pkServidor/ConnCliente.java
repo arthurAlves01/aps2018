@@ -14,7 +14,6 @@ public class ConnCliente implements Runnable {
     private SocketServidor servidor;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    private ArrayList<ConnCliente> connAtivas;
     private String nomeUsuario;
     private boolean statusConn;
 

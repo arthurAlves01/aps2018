@@ -1,18 +1,16 @@
 package pkCliente;
 
 import pkAux.*;
-
 import java.io.IOException;
-import java.util.TooManyListenersException;
 
 public class RodaCliente {
-    static private InterfaceCliente cl1;
+    static private NovaInterface cl1;
     static private SocketCliente sk1;
     static private boolean estadoConn;
 
     public static void main(String[] args) {
         Thread threadInterface;
-        cl1 = new InterfaceCliente();
+        cl1 = new NovaInterface();
         threadInterface = new Thread(cl1, "interface");
         threadInterface.start();
     }

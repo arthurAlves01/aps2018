@@ -46,13 +46,19 @@ public class SocketServidor {
     public void atualizaListaCliente() {
         ArrayList<String> connAtivas = new ArrayList<>();
         Iterator lista = this.clientes.entrySet().iterator();
+        ConnCliente cliente;
+        Mensagem msgLista;
         while(lista.hasNext()) {
             Map.Entry item = (Map.Entry)lista.next();
             connAtivas.add(item.getKey().toString());
         }
-    }
-    public void enviarListaParaClientes() {
-
+        lista = this.clientes.entrySet().iterator();
+        while(lista.hasNext()) {
+            Map.Entry item = (Map.Entry)lista.next();
+            cliente = (ConnCliente) item.getValue();
+            msgLista = new Mensagem(connAtivas);
+            //cliente.enviarMensagem();
+        }
     }
     public ConnCliente excluiCliente(ConnCliente cliente) {
         this.clientes.remove(cliente.getNomeUsuario());

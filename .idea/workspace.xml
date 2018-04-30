@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8087b12-200f-4731-90a2-bff5cf922e89" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pkCliente/NovaInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkCliente/RodaCliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkCliente/RodaCliente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkCliente/SocketCliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkCliente/SocketCliente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkServidor/ConnCliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkServidor/ConnCliente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkCliente/NovaInterface.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkAux/Mensagem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkAux/Mensagem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkAux/TipoMensagem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkAux/TipoMensagem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkCliente/NovaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkCliente/NovaInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pkCliente/RodaCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkCliente/RodaCliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkCliente/TratadorMsgServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkCliente/TratadorMsgServidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkCliente/codigo aps.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pkServidor/ConnCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkServidor/ConnCliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pkServidor/SocketServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkServidor/SocketServidor.java" afterDir="false" />
     </list>
@@ -23,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ConnCliente.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/pkServidor/ConnCliente.java">
+      <file leaf-file-name="SocketServidor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pkServidor/SocketServidor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="78" column="90" lean-forward="true" selection-start-line="78" selection-start-column="90" selection-end-line="78" selection-end-column="90" />
+            <state relative-caret-position="442">
+              <caret line="59" column="14" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,11 +32,78 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SocketServidor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pkServidor/SocketServidor.java">
+      <file leaf-file-name="RodaCliente.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pkCliente/RodaCliente.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
+            <state relative-caret-position="303">
+              <caret line="39" column="35" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SocketCliente.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pkCliente/SocketCliente.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="42" column="34" lean-forward="true" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InterfaceCliente.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pkCliente/InterfaceCliente.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1088">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NovaInterface.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pkCliente/NovaInterface.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="146">
+              <caret line="187" column="5" selection-start-line="187" selection-start-column="5" selection-end-line="187" selection-end-column="5" />
+              <folding>
+                <element signature="e#228#317#0" expanded="true" />
+                <element signature="e#10237#10238#0" expanded="true" />
+                <element signature="e#10263#10264#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RodaServidor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pkServidor/RodaServidor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Mensagem.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pkAux/Mensagem.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="30" column="34" lean-forward="true" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#590#591#0" expanded="true" />
+                <element signature="e#646#647#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TipoMensagem.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pkAux/TipoMensagem.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -73,15 +137,15 @@
         <option value="$PROJECT_DIR$/src/pkCliente/ConnServidor.java" />
         <option value="$PROJECT_DIR$/src/pkTestes/TesteNomeClasse.java" />
         <option value="$PROJECT_DIR$/src/pkTestes/TesteLayout.java" />
-        <option value="$PROJECT_DIR$/src/pkAux/TipoMensagem.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/InterfaceCliente.java" />
-        <option value="$PROJECT_DIR$/src/pkAux/Mensagem.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/SocketCliente.java" />
+        <option value="$PROJECT_DIR$/src/pkCliente/TratadorMsgServidor.java" />
+        <option value="$PROJECT_DIR$/src/pkServidor/ConnCliente.java" />
+        <option value="$PROJECT_DIR$/src/pkAux/TipoMensagem.java" />
+        <option value="$PROJECT_DIR$/src/pkAux/Mensagem.java" />
+        <option value="$PROJECT_DIR$/src/pkServidor/SocketServidor.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/RodaCliente.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/NovaInterface.java" />
-        <option value="$PROJECT_DIR$/src/pkCliente/TratadorMsgServidor.java" />
-        <option value="$PROJECT_DIR$/src/pkServidor/SocketServidor.java" />
-        <option value="$PROJECT_DIR$/src/pkServidor/ConnCliente.java" />
       </list>
     </option>
   </component>
@@ -306,7 +370,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="4" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3296875" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3171875" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3171875" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="6" />
@@ -334,13 +398,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/pkServidor/RodaServidor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pkServidor/SocketServidor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
@@ -613,54 +670,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkAux/TipoMensagem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkServidor/RodaServidor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pkCliente/NovaInterface">
       <provider editor-type-id="ui-designer" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
           <caret line="45" column="47" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkCliente/InterfaceCliente.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="58" column="40" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkCliente/SocketCliente.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-393">
-          <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-          <folding>
-            <element signature="e#639#640#0" expanded="true" />
-            <element signature="e#669#670#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkAux/Mensagem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
-          <folding>
-            <element signature="e#590#591#0" expanded="true" />
-            <element signature="e#646#647#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -671,39 +685,89 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkCliente/NovaInterface.java">
+    <entry file="file://$PROJECT_DIR$/src/pkCliente/codigo aps.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="178" column="35" selection-start-line="178" selection-start-column="20" selection-end-line="178" selection-end-column="35" />
+        <state relative-caret-position="-255" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pkServidor/ConnCliente.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
           <folding>
-            <element signature="e#208#297#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkCliente/RodaCliente.java">
+    <entry file="file://$PROJECT_DIR$/src/pkAux/TipoMensagem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="23" column="17" lean-forward="true" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+        <state relative-caret-position="136">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pkAux/Mensagem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="30" column="34" lean-forward="true" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#590#591#0" expanded="true" />
+            <element signature="e#646#647#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pkServidor/RodaServidor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pkServidor/SocketServidor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
+        <state relative-caret-position="442">
+          <caret line="59" column="14" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkServidor/ConnCliente.java">
+    <entry file="file://$PROJECT_DIR$/src/pkCliente/InterfaceCliente.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="78" column="90" lean-forward="true" selection-start-line="78" selection-start-column="90" selection-end-line="78" selection-end-column="90" />
+        <state relative-caret-position="-1088">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pkCliente/SocketCliente.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="42" column="34" lean-forward="true" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pkCliente/RodaCliente.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="39" column="35" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pkCliente/NovaInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="187" column="5" selection-start-line="187" selection-start-column="5" selection-end-line="187" selection-end-column="5" />
+          <folding>
+            <element signature="e#228#317#0" expanded="true" />
+            <element signature="e#10237#10238#0" expanded="true" />
+            <element signature="e#10263#10264#0" expanded="true" />
           </folding>
         </state>
       </provider>
