@@ -41,12 +41,11 @@ public class ConnCliente implements Runnable {
             try {
                 Mensagem msgUser = (Mensagem) in.readObject();
                 if(msgUser.getTipoMsg()==TipoMensagem.REQ_CONN&&servidor.inserirUsuario(this, msgUser.getOrigem())) {
-                    this.nomeUsuario = (String) msgUser.getMensagem();
+                    this.nomeUsuario = msgUser.getOrigem();
                     Mensagem resposta = new Mensagem(TipoMensagem.CONN_OK);
                     this.enviarMensagem(resposta);
                     statusConn = true;
-                    System.out.println("Nova conexão com o cliente " +
-                            cliente.getInetAddress().getHostAddress() + " na porta " + cliente.getPort());
+                    System.out.println("Nova conexão com o cliente \"" + this.nomeUsuario + "\": " + cliente.getInetAddress().getHostAddress() + " na porta " + cliente.getPort());
                     break;
                 } else {
                     this.enviarMensagem(new Mensagem(TipoMensagem.DC));
@@ -64,26 +63,28 @@ public class ConnCliente implements Runnable {
         while(statusConn) {
             try {
                 Object inMsg = in.readObject();
-                if(inMsg.getClass().getName().equals("pkAux.Mensagem")) {
-                    curMsg = (Mensagem) inMsg;
-                    if(curMsg.getTipoMsg()==TipoMensagem.DC) {
-                        cliente.close();
-                        servidor.excluiCliente(this);
-                        statusConn = false;
-                        System.out.println("O cliente desconectou: " + cliente.getInetAddress().getHostName());
-                    }
+                curMsg = (Mensagem) inMsg;
+                if(curMsg.getTipoMsg()==TipoMensagem.DC) {
+                    servidor.excluiCliente(this);
+                    statusConn = false;
+                    System.out.println("O cliente \"" + this.nomeUsuario + "\" desconectou: " + cliente.getInetAddress().getHostName() + ":" + this.cliente.getPort());
                 }
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println("Erro de IO com o cliente: " + this.cliente.getPort());
+                System.out.println("Erro de IO, o cliente \"" + this.nomeUsuario + "\" desconectou: " + cliente.getInetAddress().getHostName() + ":" + this.cliente.getPort() + " foi desconectado!");
                 this.servidor.excluiCliente(this);
                 break;
             } catch (ClassNotFoundException e) {
                 //e.printStackTrace();
-                System.out.println("Erro de Classe Não Encontratada com o cliente: " + this.cliente.getPort());
+                System.out.println("Erro de 'Classe Não Encontratada', o cliente \"" + this.nomeUsuario + "\" desconectou: " + cliente.getInetAddress().getHostName() + ":" + this.cliente.getPort() + " foi desconectado!");
                 this.servidor.excluiCliente(this);
                 break;
             }
+        }
+        try {
+            this.cliente.close();
+        } catch (IOException ioe) {
+            //ioe.printStackTrace();
         }
     }
 }

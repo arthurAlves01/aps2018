@@ -2,11 +2,37 @@ package pkCliente;
 
 
 import pkAux.Mensagem;
+import javax.swing.JOptionPane;
+import java.awt.event.WindowListener;
+import java.util.regex.*;
+import java.awt.event.*;
 
+public class NovaInterface extends javax.swing.JFrame implements Runnable, WindowListener {
 
-public class NovaInterface extends javax.swing.JFrame implements Runnable  {
+    public void windowClosed(WindowEvent e) {
 
+    }
+    public void windowActivated(WindowEvent e) {
 
+    }
+    public void windowClosing(WindowEvent e) {
+        RodaCliente.encerrarConn();
+    }
+    public void windowOpened(WindowEvent e) {
+
+    }
+    public void windowDeactivated(WindowEvent e) {
+
+    }
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    private final Pattern PADRAO_USUARIO = Pattern.compile("^[A-Za-z][A-Za-z0-9]+$");
+    private Matcher matcherUsuario;
 
     public NovaInterface() {
         initComponents();
@@ -32,6 +58,7 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable  {
         btnEnviar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(this);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Conectar"));
 
@@ -176,6 +203,15 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable  {
     }// </editor-fold>                        
 
     private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {
+        if(this.nomeConectar.getText().equals("")) {
+            alerta("Informe um nome de usuário!");
+            return;
+        }
+        matcherUsuario = PADRAO_USUARIO.matcher(this.nomeConectar.getText());
+        if(!matcherUsuario.find()) {
+            alerta("O nome de usuário deve conter apenas número e letrar e iniciar com uma letra");
+            return;
+        }
         RodaCliente.estabelecerConn("127.0.0.1", 12345, this.nomeConectar.getText());
     }
 
@@ -185,6 +221,16 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable  {
 
     private void btnDesconectarActionPerformed(java.awt.event.ActionEvent evt) {
         RodaCliente.encerrarConn();
+    }
+
+    public void habilitaCampos() {
+
+    }
+    public void desabilitarCampos() {
+        //TODO: Habilitar campo conectar e desabilitar demais
+    }
+    public void alerta(String mensagemDeAlerta) {
+        JOptionPane.showMessageDialog(null, mensagemDeAlerta);
     }
     public void run() {
         new NovaInterface().setVisible(true);

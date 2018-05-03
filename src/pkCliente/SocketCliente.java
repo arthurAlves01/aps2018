@@ -38,16 +38,13 @@ public class SocketCliente implements Runnable{
     public void enviaDadosConn() {
         try {
             out.writeObject(new Mensagem(this.nomeUsuario, TipoMensagem.REQ_CONN));
-            System.out.println(this.nomeUsuario);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
     public void enviarMensagem(Mensagem msg) {
         try {
-            System.out.println((String)msg.getMensagem());
             out.writeObject(msg);
-            //out.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,6 +61,7 @@ public class SocketCliente implements Runnable{
             eHost.printStackTrace();
         } catch (IOException eio) {
             eio.printStackTrace();
+            RodaCliente.enviarAlerta("O servidor não está disponível no momento!");
         }
     }
     public String getNomeCliente() {

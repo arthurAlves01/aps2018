@@ -57,11 +57,12 @@ public class SocketServidor {
             Map.Entry item = (Map.Entry)lista.next();
             cliente = (ConnCliente) item.getValue();
             msgLista = new Mensagem(connAtivas);
-            //cliente.enviarMensagem();
+            cliente.enviarMensagem(msgLista);
         }
     }
     public ConnCliente excluiCliente(ConnCliente cliente) {
         this.clientes.remove(cliente.getNomeUsuario());
+        this.atualizaListaCliente();
         return cliente;
     }
 }

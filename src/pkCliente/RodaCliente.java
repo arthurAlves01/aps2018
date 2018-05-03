@@ -7,6 +7,7 @@ public class RodaCliente {
     static private NovaInterface cl1;
     static private SocketCliente sk1;
     static private boolean estadoConn;
+    static private Thread threadSocket;
 
     public static void main(String[] args) {
         Thread threadInterface;
@@ -17,15 +18,13 @@ public class RodaCliente {
 
     public static void estabelecerConn(String host, int porta, String usuario) {
         if(!getEstadoConn()) {
-            Thread threadSocket;
             sk1 = new SocketCliente(host, porta, usuario);
-            estadoConn = true;
             threadSocket = new Thread(sk1, "conexao");
             threadSocket.start();
         }
     }
-    public static void setEstadoConn() {
-        estadoConn = !estadoConn;
+    public static void setEstadoConn(boolean estado) {
+        estadoConn = estado;
     }
     public static boolean getEstadoConn() {
         return estadoConn;
@@ -37,14 +36,31 @@ public class RodaCliente {
     public static void enviaMensagemParaSocket(Mensagem msg) {
         sk1.enviarMensagem(msg);
     }
+    public static void habilitaCamposInterface() {
+        cl1.habilitaCampos();
+    }
+    public static void desabilitaCamposInterface() {
+        cl1.desabilitarCampos();
+    }
     public static void encerrarConn() {
-        try {
-            sk1.getSocket().close();
-            Mensagem dc = new Mensagem(TipoMensagem.DC);
-            enviaMensagemParaSocket(dc);
-            System.out.println("Desconectado com sucesso!");
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        if(getEstadoConn()) {
+            try {
+                Mensagem dc = new Mensagem(TipoMensagem.DC);
+                enviaMensagemParaSocket(dc);
+                sk1.getSocket().close();
+                setEstadoConn(false);
+                desabilitaCamposInterface();
+                //threadSocket.interrupt();
+                System.out.println("Desconectado com sucesso!");
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
         }
+    }
+    public static String getNomeDeUsuario() {
+        return sk1.getNomeCliente();
+    }
+    public static void enviarAlerta(String mensagem) {
+        cl1.alerta(mensagem);
     }
 }
