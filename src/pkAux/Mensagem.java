@@ -10,7 +10,6 @@ public class Mensagem implements Serializable {
     private String destino;
     private TipoMensagem tipoMensagem;
     private Object conteudoMensagem;
-    private ArrayList<ConnCliente> listaClientes;
 
     public TipoMensagem getTipoMsg() {
         return this.tipoMensagem;
@@ -25,8 +24,8 @@ public class Mensagem implements Serializable {
     public Mensagem(Object conteudoMensagem) {
         this.conteudoMensagem = conteudoMensagem;
     }
-    public Mensagem(ArrayList<ConnCliente> clienteAtivos) {
-        this.listaClientes = clienteAtivos;
+    public Mensagem(ArrayList<String> clienteAtivos) {
+        this.conteudoMensagem = clienteAtivos;
         this.tipoMensagem = TipoMensagem.LISTA_CLIENTES;
     }
     public Mensagem(String nomeUsuario, TipoMensagem tpMsg) {

@@ -2,8 +2,14 @@ package pkCliente;
 
 
 import pkAux.Mensagem;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.regex.*;
 import java.awt.event.*;
 
@@ -31,7 +37,7 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable, Windo
 
     }
 
-    private final Pattern PADRAO_USUARIO = Pattern.compile("^[A-Za-z][A-Za-z0-9]+$");
+    private final Pattern PADRAO_USUARIO = Pattern.compile("^[A-Za-z][A-Za-z0-9]{3,}$");
     private Matcher matcherUsuario;
 
     public NovaInterface() {
@@ -100,18 +106,13 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable, Windo
                                 .addGap(0, 18, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Onlines"));
+        jPanel2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Onlines"), BorderFactory.createEmptyBorder(-3,-3,-3,-3)));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 147, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 0, Short.MAX_VALUE)
-        );
+        java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
+        jPanel2.setPreferredSize(new Dimension(110, 100));
+        jPanel2.setMinimumSize(new Dimension(110,100));
+        jPanel2.setMaximumSize(new Dimension(110,100));
+
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setToolTipText("");
@@ -170,7 +171,7 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable, Windo
                                         .addComponent(btnAnexar)
                                         .addComponent(btnLimpar)
                                         .addComponent(btnEnviar))
-                                .addContainerGap(23, Short.MAX_VALUE))
+                                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,7 +213,10 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable, Windo
             alerta("O nome de usuário deve conter apenas número e letrar e iniciar com uma letra");
             return;
         }
-        RodaCliente.estabelecerConn("127.0.0.1", 12345, this.nomeConectar.getText());
+        RodaCliente.estabelecerConn("169.254.167.178", 12345, this.nomeConectar.getText());
+        jPanel2.add(new itemLista("Teste"));
+        jPanel2.repaint();
+        jPanel2.revalidate();
     }
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +229,17 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable, Windo
 
     public void habilitaCampos() {
 
+    }
+    public void listarClientes(Mensagem msg) {
+        jPanel2.removeAll();
+        ArrayList<String> clientes = (ArrayList<String>) msg.getMensagem();
+        for(String cliente: clientes) {
+            if(!cliente.equals(RodaCliente.getUsuarioSocket())) {
+                jPanel2.add(new itemLista(cliente));
+                jPanel2.repaint();
+                jPanel2.revalidate();
+            }
+        }
     }
     public void desabilitarCampos() {
         //TODO: Habilitar campo conectar e desabilitar demais
@@ -253,5 +268,13 @@ public class NovaInterface extends javax.swing.JFrame implements Runnable, Windo
 
     void mostraMensagem(Mensagem msg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
+class itemLista extends javax.swing.JLabel {
+    public itemLista(String nome) {
+        this.setPreferredSize(new Dimension(100, 22));
+        this.setMaximumSize(new Dimension(100, 22));
+        this.setMinimumSize(new Dimension(100, 22));
+        this.setText(nome);
     }
 }

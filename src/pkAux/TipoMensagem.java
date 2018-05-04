@@ -1,6 +1,8 @@
 package pkAux;
 
-public enum TipoMensagem {
+import java.io.Serializable;
+
+public enum TipoMensagem implements Serializable{
     TEXTO,
     IMG,
     REQ_CONN,

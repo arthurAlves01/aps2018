@@ -2,7 +2,10 @@ package pkCliente;;
 
 import java.io.*;
 import java.net.*;
+
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import pkAux.*;
+import java.util.ArrayList;
 
 class TratadorMsgServidor implements Runnable {
 

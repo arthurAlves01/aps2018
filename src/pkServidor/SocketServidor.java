@@ -52,11 +52,11 @@ public class SocketServidor {
             Map.Entry item = (Map.Entry)lista.next();
             connAtivas.add(item.getKey().toString());
         }
+        msgLista = new Mensagem(connAtivas);
         lista = this.clientes.entrySet().iterator();
         while(lista.hasNext()) {
             Map.Entry item = (Map.Entry)lista.next();
             cliente = (ConnCliente) item.getValue();
-            msgLista = new Mensagem(connAtivas);
             cliente.enviarMensagem(msgLista);
         }
     }

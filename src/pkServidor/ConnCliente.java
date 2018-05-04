@@ -40,7 +40,7 @@ public class ConnCliente implements Runnable {
         while(true) {
             try {
                 Mensagem msgUser = (Mensagem) in.readObject();
-                if(msgUser.getTipoMsg()==TipoMensagem.REQ_CONN&&servidor.inserirUsuario(this, msgUser.getOrigem())) {
+                if (msgUser.getTipoMsg() == TipoMensagem.REQ_CONN && servidor.inserirUsuario(this, msgUser.getOrigem())) {
                     this.nomeUsuario = msgUser.getOrigem();
                     Mensagem resposta = new Mensagem(TipoMensagem.CONN_OK);
                     this.enviarMensagem(resposta);
@@ -60,6 +60,7 @@ public class ConnCliente implements Runnable {
                 e.printStackTrace();
             }
         }
+        servidor.atualizaListaCliente();
         while(statusConn) {
             try {
                 Object inMsg = in.readObject();

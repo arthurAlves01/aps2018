@@ -31,7 +31,11 @@ public class RodaCliente {
     }
 
     public static void enviaParaInterface(Mensagem msg) {
-        cl1.mostraMensagem(msg);
+        if(msg.getTipoMsg()==TipoMensagem.LISTA_CLIENTES) {
+            cl1.listarClientes(msg);
+        } else {
+            cl1.mostraMensagem(msg);
+        }
     }
     public static void enviaMensagemParaSocket(Mensagem msg) {
         sk1.enviarMensagem(msg);
@@ -57,8 +61,8 @@ public class RodaCliente {
             }
         }
     }
-    public static String getNomeDeUsuario() {
-        return sk1.getNomeCliente();
+    public static String getUsuarioSocket() {
+        return sk1.getNomeUsuario();
     }
     public static void enviarAlerta(String mensagem) {
         cl1.alerta(mensagem);

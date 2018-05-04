@@ -64,7 +64,7 @@ public class SocketCliente implements Runnable{
             RodaCliente.enviarAlerta("O servidor não está disponível no momento!");
         }
     }
-    public String getNomeCliente() {
+    public String getNomeUsuario() {
         return this.nomeUsuario;
     }
 }
