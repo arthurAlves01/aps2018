@@ -30,9 +30,7 @@ public class SocketServidor {
     }
     public void enviarMensagemParaCliente(Mensagem msg) {
         ConnCliente dest = this.clientes.get(msg.getDestino());
-        if(dest!=null) {
-            dest.enviarMensagem(msg);
-        }
+        dest.enviarMensagem(msg);
     }
     public boolean inserirUsuario(ConnCliente socket, String nomeUsuario) {
         if(this.clientes.get(nomeUsuario)==null) {

@@ -69,6 +69,8 @@ public class ConnCliente implements Runnable {
                     servidor.excluiCliente(this);
                     statusConn = false;
                     System.out.println("O cliente \"" + this.nomeUsuario + "\" desconectou: " + cliente.getInetAddress().getHostName() + ":" + this.cliente.getPort());
+                } else {
+                    servidor.enviarMensagemParaCliente(curMsg);
                 }
             } catch (IOException e) {
                 //e.printStackTrace();

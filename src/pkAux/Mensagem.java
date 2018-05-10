@@ -10,6 +10,11 @@ public class Mensagem implements Serializable {
     private String destino;
     private TipoMensagem tipoMensagem;
     private Object conteudoMensagem;
+    private Date timeStamp;
+
+    {
+        this.timeStamp = new Date();
+    }
 
     public TipoMensagem getTipoMsg() {
         return this.tipoMensagem;
