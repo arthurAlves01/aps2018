@@ -16,7 +16,11 @@ class TratadorMsgServidor implements Runnable {
         this.skCliente = serv;
         this.inServidor = serv.getIn();
     }
-
+    private void sinalizarDC() {
+        RodaCliente.desabilitaCamposInterface();
+        RodaCliente.setEstadoConn(false);
+        RodaCliente.enviarAlerta("Você foi desconectado!");
+    }
     public void run() {
         Mensagem msg;
         skCliente.enviaDadosConn();
@@ -48,8 +52,10 @@ class TratadorMsgServidor implements Runnable {
                 msg = (Mensagem) inServidor.readObject();
                 RodaCliente.enviaParaInterface(msg);
             } catch (ClassNotFoundException e) {
+                sinalizarDC();
                 e.printStackTrace();
             } catch (IOException ioe) {
+                sinalizarDC();
                 ioe.printStackTrace();
             }
         }

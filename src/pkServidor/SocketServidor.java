@@ -29,8 +29,18 @@ public class SocketServidor {
         }
     }
     public void enviarMensagemParaCliente(Mensagem msg) {
-        ConnCliente dest = this.clientes.get(msg.getDestino());
-        dest.enviarMensagem(msg);
+        if(msg.getDestino().equals("")||msg.getDestino()==null) {
+            Iterator lista = this.clientes.entrySet().iterator();
+            ConnCliente c;
+            while(lista.hasNext()) {
+                Map.Entry item = (Map.Entry)lista.next();
+                c = (ConnCliente)item.getValue();
+                c.enviarMensagem(msg);
+            }
+        } else {
+            ConnCliente dest = this.clientes.get(msg.getDestino());
+            dest.enviarMensagem(msg);
+        }
     }
     public boolean inserirUsuario(ConnCliente socket, String nomeUsuario) {
         if(this.clientes.get(nomeUsuario)==null) {

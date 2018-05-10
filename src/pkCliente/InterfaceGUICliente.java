@@ -9,8 +9,9 @@ public interface InterfaceGUICliente {
     void desconectar();
     void enviarMensagem(Mensagem msg);
     void exibirMensagem(Mensagem msg);
-    void atualizarLista(ArrayList<String> clientes);
+    void atualizarLista(Mensagem msg);
     void atualizaConversas();
-    void habilitarCmapos();
+    void habilitarCampos();
     void desabilitarCampos();
+    void alerta(String texto);
 }

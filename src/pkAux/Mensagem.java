@@ -37,13 +37,13 @@ public class Mensagem implements Serializable {
         this.origem = nomeUsuario;
         this.tipoMensagem = tpMsg;
     }
-    public Mensagem(String origem, String destino, String texto, TipoMensagem tpMsg) {
+    public Mensagem(String origem, String destino, String texto) {
         this.origem = origem;
         this.destino = destino;
         this.tipoMensagem = TipoMensagem.TEXTO;
         this.conteudoMensagem = texto;
     }
-    public Mensagem(String origem, String destino, Image img, TipoMensagem tpMsg) {
+    public Mensagem(String origem, String destino, Image img) {
         this.origem = origem;
         this.destino = destino;
         this.tipoMensagem = TipoMensagem.IMG;

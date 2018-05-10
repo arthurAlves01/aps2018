@@ -4,16 +4,17 @@ import pkAux.*;
 import java.io.IOException;
 
 public class RodaCliente {
-    static private NovaInterface cl1;
+    static private MainGUICliente cl1;
     static private SocketCliente sk1;
     static private boolean estadoConn;
     static private Thread threadSocket;
 
     public static void main(String[] args) {
         Thread threadInterface;
-        cl1 = new NovaInterface();
+        cl1 = new MainGUICliente();
         threadInterface = new Thread(cl1, "interface");
         threadInterface.start();
+        cl1.exibirMensagem(new Mensagem("","","Hello World!"));
     }
 
     public static void estabelecerConn(String host, int porta, String usuario) {
@@ -32,16 +33,16 @@ public class RodaCliente {
 
     public static void enviaParaInterface(Mensagem msg) {
         if(msg.getTipoMsg()==TipoMensagem.LISTA_CLIENTES) {
-            cl1.listarClientes(msg);
+            cl1.atualizarLista(msg);
         } else {
-            cl1.mostraMensagem(msg);
+            cl1.atualizarLista(msg);
         }
     }
     public static void enviaMensagemParaSocket(Mensagem msg) {
         sk1.enviarMensagem(msg);
     }
     public static void habilitaCamposInterface() {
-        cl1.habilitaCampos();
+        cl1.habilitarCampos();
     }
     public static void desabilitaCamposInterface() {
         cl1.desabilitarCampos();

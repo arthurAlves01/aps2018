@@ -6,21 +6,47 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainGUICliente extends JFrame implements InterfaceGUICliente {
+public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runnable {
     //Métodos da interface
-    public void conectar(){}
-    public void desconectar(){}
+    public void conectar(){
+        String usuario = this.inputNomeUsuario.getText();
+        matcherUsuario = PADRAO_USUARIO.matcher(usuario);
+        if(!matcherUsuario.find()) {
+            alerta("O nome de usuário de iniciar com letra, conter pelo menos 4 caracteres e ser composto apenas de letras e números! ");
+        } else {
+            RodaCliente.estabelecerConn("127.0.0.1", 12345, usuario);
+            alerta("Conectado com sucesso!");
+        }
+    }
+    public void desconectar(){
+        RodaCliente.encerrarConn();
+        desabilitarCampos();
+    }
     public void enviarMensagem(Mensagem msg){}
-    public void exibirMensagem(Mensagem msg){}
-    public void atualizarLista(ArrayList<String> clientes){}
-    public void habilitarCmapos(){}
-    public void desabilitarCampos(){}
+    public void exibirMensagem(Mensagem msg){
+        alerta((String)msg.getMensagem());
+    }
+    public void atualizarLista(Mensagem msg){}
+    public void habilitarCampos(){
+        btnConectar.setEnabled(false);
+        btnDesconectar.setEnabled(true);
+    }
+    public void desabilitarCampos(){
+        btnConectar.setEnabled(true);
+        btnDesconectar.setEnabled(false);
+    }
     public void atualizaConversas(){}
+    public void alerta(String texto){
+        JOptionPane.showMessageDialog(null, texto);
+    };
+
 
     //Propriedads diversas da janela
     private final Pattern PADRAO_USUARIO = Pattern.compile("^[A-Za-z][A-Za-z0-9]{3,}$");
@@ -43,9 +69,10 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente {
     //Declaroções dos componentes do campo com as janelas de conversas
     private JPanel wrapConversas;
 
-    public MainGUICliente() {
+    /*public MainGUICliente() {
         initGUI();
-    }
+    }*/
+    public void run() { initGUI(); }
     public void initGUI() {
         //Declaração dos layouts
         javax.swing.border.Border bordaComTitulo;
@@ -129,6 +156,19 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente {
         springL1.putConstraint(SpringLayout.SOUTH, wrapConversas, 0, SpringLayout.SOUTH, wrapListaUsuarios);
 
 
+        //Eventos dos componentes
+        btnConectar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                conectar();
+            }
+        });
+        btnDesconectar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                desconectar();
+            }
+        });
         //Adiciona os panels no frame principal
         this.add(optsConn);
         this.add(wrapListaUsuarios);
@@ -136,9 +176,9 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente {
         this.pack();
         this.setVisible(true);
     }
-    public static void main(String... args) {
+    /*public static void main(String... args) {
         MainGUICliente m1 = new MainGUICliente();
-    }
+    }*/
     public void addConversa() {
 
     }
