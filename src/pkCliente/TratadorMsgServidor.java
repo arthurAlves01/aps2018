@@ -1,16 +1,13 @@
 package pkCliente;;
 
 import java.io.*;
-import java.net.*;
-
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import pkAux.*;
-import java.util.ArrayList;
 
 class TratadorMsgServidor implements Runnable {
 
     private SocketCliente skCliente;
     private ObjectInputStream inServidor;
+    private boolean timeout;
 
     public TratadorMsgServidor(SocketCliente serv) {
         this.skCliente = serv;
@@ -22,16 +19,27 @@ class TratadorMsgServidor implements Runnable {
         RodaCliente.enviarAlerta("Você foi desconectado!");
     }
     public void run() {
+        timeout = true;
         Mensagem msg;
         skCliente.enviaDadosConn();
         System.out.println("Enviando informações para o servidor.");
-        while(true) {
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        System.out.println("Timer finalizado!");
+                        timeout = false;
+                    }
+                },
+                5000
+        );
+        while(timeout) {
             try {
                 msg = (Mensagem) inServidor.readObject();
                 if(msg.getTipoMsg()==TipoMensagem.CONN_OK) {
-                    System.out.println("Conectado ao servidor!");
                     RodaCliente.setEstadoConn(true);
                     RodaCliente.habilitaCamposInterface();
+                    RodaCliente.enviarAlerta("Conectado com sucesso!");
                     break;
                 } else if(msg.getTipoMsg()==TipoMensagem.DC) {
                     System.out.println("Nome de usuário em uso!");

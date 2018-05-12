@@ -45,32 +45,32 @@ public class SocketServidor {
     public boolean inserirUsuario(ConnCliente socket, String nomeUsuario) {
         if(this.clientes.get(nomeUsuario)==null) {
             this.clientes.put(nomeUsuario, socket);
-            this.atualizaListaCliente();
+            this.atualizaListaCliente(null);
             return true;
         }
         return false;
     }
 
-    public void atualizaListaCliente() {
+    public void atualizaListaCliente(String clienteRemovido) {
         ArrayList<String> connAtivas = new ArrayList<>();
         Iterator lista = this.clientes.entrySet().iterator();
-        ConnCliente cliente;
+        ConnCliente clienteAtual;
         Mensagem msgLista;
         while(lista.hasNext()) {
             Map.Entry item = (Map.Entry)lista.next();
             connAtivas.add(item.getKey().toString());
         }
-        msgLista = new Mensagem(connAtivas);
+        msgLista = new Mensagem(clienteRemovido, connAtivas);
         lista = this.clientes.entrySet().iterator();
         while(lista.hasNext()) {
             Map.Entry item = (Map.Entry)lista.next();
-            cliente = (ConnCliente) item.getValue();
-            cliente.enviarMensagem(msgLista);
+            clienteAtual = (ConnCliente) item.getValue();
+            clienteAtual.enviarMensagem(msgLista);
         }
     }
     public ConnCliente excluiCliente(ConnCliente cliente) {
         this.clientes.remove(cliente.getNomeUsuario());
-        this.atualizaListaCliente();
+        this.atualizaListaCliente(cliente.getNomeUsuario());
         return cliente;
     }
 }

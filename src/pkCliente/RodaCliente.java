@@ -2,6 +2,7 @@ package pkCliente;
 
 import pkAux.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class RodaCliente {
     static private MainGUICliente cl1;
@@ -14,7 +15,7 @@ public class RodaCliente {
         cl1 = new MainGUICliente();
         threadInterface = new Thread(cl1, "interface");
         threadInterface.start();
-        cl1.exibirMensagem(new Mensagem("","","Hello World!"));
+        //cl1.exibirMensagem(new Mensagem("","","Hello World!"));
     }
 
     public static void estabelecerConn(String host, int porta, String usuario) {
@@ -35,7 +36,7 @@ public class RodaCliente {
         if(msg.getTipoMsg()==TipoMensagem.LISTA_CLIENTES) {
             cl1.atualizarLista(msg);
         } else {
-            cl1.atualizarLista(msg);
+            //cl1.atualizarLista(msg);
         }
     }
     public static void enviaMensagemParaSocket(Mensagem msg) {
@@ -68,4 +69,5 @@ public class RodaCliente {
     public static void enviarAlerta(String mensagem) {
         cl1.alerta(mensagem);
     }
+
 }

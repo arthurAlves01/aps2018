@@ -25,11 +25,11 @@ public class Mensagem implements Serializable {
     public String getDestino() {
         return this.destino;
     }
-
-    public Mensagem(Object conteudoMensagem) {
-        this.conteudoMensagem = conteudoMensagem;
+    public Date getTimeStamp() {
+        return this.timeStamp;
     }
-    public Mensagem(ArrayList<String> clienteAtivos) {
+    public Mensagem(String clienteRemovido, ArrayList<String> clienteAtivos) {
+        this.origem = clienteRemovido;
         this.conteudoMensagem = clienteAtivos;
         this.tipoMensagem = TipoMensagem.LISTA_CLIENTES;
     }

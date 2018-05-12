@@ -60,7 +60,7 @@ public class ConnCliente implements Runnable {
                 e.printStackTrace();
             }
         }
-        servidor.atualizaListaCliente();
+        servidor.atualizaListaCliente(null);
         while(statusConn) {
             try {
                 Object inMsg = in.readObject();
@@ -74,12 +74,12 @@ public class ConnCliente implements Runnable {
                 }
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println("Erro de IO, o cliente \"" + this.nomeUsuario + "\" desconectou: " + cliente.getInetAddress().getHostAddress() + ":" + this.cliente.getPort() + " foi desconectado!");
+                System.out.println("Erro de IO, o cliente \"" + this.nomeUsuario + "\" desconectou: " + cliente.getInetAddress().getHostAddress() + ":" + this.cliente.getPort());
                 this.servidor.excluiCliente(this);
                 break;
             } catch (ClassNotFoundException e) {
                 //e.printStackTrace();
-                System.out.println("Erro de 'Classe Não Encontratada', o cliente \"" + this.nomeUsuario + "\" desconectou: " + cliente.getInetAddress().getHostAddress() + ":" + this.cliente.getPort() + " foi desconectado!");
+                System.out.println("Erro de 'Classe Não Encontratada', o cliente \"" + this.nomeUsuario + "\" desconectou: " + cliente.getInetAddress().getHostAddress() + ":" + this.cliente.getPort());
                 this.servidor.excluiCliente(this);
                 break;
             }
