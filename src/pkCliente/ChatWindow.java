@@ -85,7 +85,16 @@ public class ChatWindow extends JPanel {
         StringBuffer textoDeExib;
         textoDeExib = new StringBuffer();
         String timeStampFormatado = new SimpleDateFormat("HH:mm").format(msg.getTimeStamp());
+        textoDeExib.append("(");
         textoDeExib.append(timeStampFormatado);
+        textoDeExib.append(") ");
+        if(msg.getOrigem().equals(RodaCliente.getUsuarioSocket())) {
+            textoDeExib.append("Você disse: ");
+        } else {
+            textoDeExib.append(msg.getOrigem() + " disse: ");
+        }
+
+        textoDeExib.append(msg.getMensagem());
         conversa.add(new JLabel(textoDeExib.toString()));
     }
 }

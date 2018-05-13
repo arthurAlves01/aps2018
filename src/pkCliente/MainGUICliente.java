@@ -3,6 +3,7 @@ package pkCliente;
 import pkAux.Mensagem;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -32,10 +33,19 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         lista.validate();
     }
     public void enviarMensagem(Mensagem msg){
-        System.out.println(msg.getMensagem());
+        RodaCliente.enviaMensagemParaSocket(msg);
     }
     public void exibirMensagem(Mensagem msg){
-        alerta((String)msg.getMensagem());
+        String origem;
+        origem = msg.getDestino().equals("\\all")?"\\all":msg.getOrigem();
+        if(listaChatsAtivos.get(origem)==null) {
+            if(listaChatsAtivos.isEmpty()) {
+                ((TitledBorder)wrapConversas.getBorder()).setTitle("Conversa com " + origem + ":");
+            }
+            listaChatsAtivos.put(origem, addConversa(origem));
+        }
+        if(!msg.getOrigem().equals(RodaCliente.getUsuarioSocket()))
+            listaChatsAtivos.get(origem).addMensagem(msg);
     }
     public void atualizarLista(Mensagem msg){
         ArrayList<String> listaAtualizada = (ArrayList<String>)msg.getMensagem();
@@ -74,23 +84,33 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
     public void habilitarCampos(){
         btnConectar.setEnabled(false);
         btnDesconectar.setEnabled(true);
+        inputNomeUsuario.setEnabled(false);
         addClienteLista("\\all");
     }
     public void desabilitarCampos(){
         btnConectar.setEnabled(true);
         btnDesconectar.setEnabled(false);
+        inputNomeUsuario.setEnabled(true);
     }
     public void atualizaConversas(){}
     public void alerta(String texto){
         JOptionPane.showMessageDialog(null, texto);
     };
-
+    public ChatWindow addConversa(String contato) {
+        ChatWindow chatWin = listaChats.get(contato);
+        wrapConversas.add(chatWin);
+        ((CardLayout)wrapConversas.getLayout()).addLayoutComponent(chatWin, contato);
+        //wrapConversas.repaint();
+        //wrapConversas.revalidate();
+        //wrapConversas.validate();
+        return chatWin;
+    }
 
     //Propriedads diversas da janela
     private final Pattern PADRAO_USUARIO = Pattern.compile("^[A-Za-z][A-Za-z0-9]{3,}$");
     private Matcher matcherUsuario;
     private HashMap<String, ChatWindow> listaChats;
-    private HashMap<String, Boolean> listaChatsAtivos;
+    private HashMap<String, ChatWindow> listaChatsAtivos;
 
     //Campos da GUI
     //Declarações dos componentes do campo de conexão
@@ -170,7 +190,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         //Criação dos componentes da janela contendo as conversas
         wrapConversas = new JPanel(new CardLayout());
         bordaComTitulo = BorderFactory.createLineBorder(new Color(128,128,128));
-        bordaComTitulo = BorderFactory.createTitledBorder(bordaComTitulo, "Conversa com :");
+        bordaComTitulo = BorderFactory.createTitledBorder(bordaComTitulo, "");
         wrapConversas.setBorder(bordaComTitulo);
         wrapConversas.setPreferredSize(new Dimension(100,100));
 
@@ -201,7 +221,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         btnDesconectar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JOptionPane.showConfirmDialog(null, "Deseja desconectar?","Desconectar", JOptionPane.YES_NO_OPTION)==1)
+                if(JOptionPane.showConfirmDialog(null, "Deseja desconectar?","Desconectar", JOptionPane.YES_NO_OPTION)==0)
                     desconectar();
             }
         });
@@ -236,12 +256,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
     /*public static void main(String... args) {
         MainGUICliente m1 = new MainGUICliente();
     }*/
-    public void addConversa(ChatWindow chatWin) {
-        wrapConversas.add(chatWin);
-        wrapConversas.repaint();
-        wrapConversas.revalidate();
-        wrapConversas.validate();
-    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -250,11 +265,13 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
             e.consume();
             if(listaChatsAtivos.get(contatoSelecionado)==null) {
                 //JOptionPane.showMessageDialog(null, contatoSelecionado);
-                listaChatsAtivos.put(contatoSelecionado, false);
-                addConversa(listaChats.get(contatoSelecionado));
-            } else {
-                //TODO: ativar conversa que já foi criada
+                listaChatsAtivos.put(contatoSelecionado, addConversa(contatoSelecionado));
             }
+            ((CardLayout)wrapConversas.getLayout()).show(wrapConversas, contatoSelecionado);
+            ((TitledBorder)wrapConversas.getBorder()).setTitle("Conversa com " + contatoSelecionado + ":");
+            System.out.println(contatoSelecionado);
+            wrapConversas.revalidate();
+            wrapConversas.repaint();
         }
     }
 

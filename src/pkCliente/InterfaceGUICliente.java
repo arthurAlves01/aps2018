@@ -14,4 +14,5 @@ public interface InterfaceGUICliente {
     void habilitarCampos();
     void desabilitarCampos();
     void alerta(String texto);
+    ChatWindow addConversa(String chatWin);
 }

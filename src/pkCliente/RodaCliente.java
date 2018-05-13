@@ -36,7 +36,7 @@ public class RodaCliente {
         if(msg.getTipoMsg()==TipoMensagem.LISTA_CLIENTES) {
             cl1.atualizarLista(msg);
         } else {
-            //cl1.atualizarLista(msg);
+            cl1.exibirMensagem(msg);
         }
     }
     public static void enviaMensagemParaSocket(Mensagem msg) {

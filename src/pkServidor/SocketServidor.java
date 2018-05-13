@@ -29,7 +29,7 @@ public class SocketServidor {
         }
     }
     public void enviarMensagemParaCliente(Mensagem msg) {
-        if(msg.getDestino().equals("")||msg.getDestino()==null) {
+        if(msg.getDestino().equals("\\all")||msg.getDestino()==null) {
             Iterator lista = this.clientes.entrySet().iterator();
             ConnCliente c;
             while(lista.hasNext()) {
