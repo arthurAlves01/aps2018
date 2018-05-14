@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8087b12-200f-4731-90a2-bff5cf922e89" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pkTestes/Foo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkCliente/ChatWindow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkCliente/ChatWindow$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkCliente/ChatWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkCliente/ChatWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkCliente/MainGUICliente$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkCliente/MainGUICliente$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkCliente/MainGUICliente$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkCliente/MainGUICliente$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkCliente/MainGUICliente$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkCliente/MainGUICliente$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/aps2018/pkCliente/MainGUICliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/aps2018/pkCliente/MainGUICliente.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pkCliente/ChatWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkCliente/ChatWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkCliente/InterfaceGUICliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkCliente/InterfaceGUICliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pkCliente/MainGUICliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkCliente/MainGUICliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkCliente/RodaCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkCliente/RodaCliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkServidor/SocketServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkServidor/SocketServidor.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +26,8 @@
       <file leaf-file-name="MainGUICliente.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pkCliente/MainGUICliente.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="39" column="21" lean-forward="true" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+            <state relative-caret-position="127">
+              <caret line="198" column="53" lean-forward="true" selection-start-line="198" selection-start-column="53" selection-end-line="198" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -55,9 +60,9 @@
       <find>getName</find>
       <find>enviar</find>
       <find>enviarMen</find>
-      <find>addConversa</find>
       <find>listaChatsAtivos</find>
       <find>listaChats</find>
+      <find>addConversa</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -91,10 +96,11 @@
         <option value="$PROJECT_DIR$/src/pkServidor/ConnCliente.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/Executors.java" />
         <option value="$PROJECT_DIR$/src/pkAux/Mensagem.java" />
-        <option value="$PROJECT_DIR$/src/pkCliente/TratadorMsgServidor.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/RodaCliente.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/InterfaceGUICliente.java" />
         <option value="$PROJECT_DIR$/src/pkServidor/SocketServidor.java" />
+        <option value="$PROJECT_DIR$/src/pkCliente/TratadorMsgServidor.java" />
+        <option value="$PROJECT_DIR$/src/pkTestes/Foo.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/ChatWindow.java" />
         <option value="$PROJECT_DIR$/src/pkCliente/MainGUICliente.java" />
       </list>
@@ -114,9 +120,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -147,10 +150,19 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pkServidor" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Aps2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="aps2018" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pkTestes" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -176,6 +188,17 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.RodaCliente">
+    <configuration name="Foo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="pkTestes.Foo" />
+      <module name="aps2018" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pkTestes.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
     <configuration name="MainGUICliente" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pkCliente.MainGUICliente" />
       <module name="aps2018" />
@@ -218,17 +241,6 @@
       <option name="MAIN_CLASS_NAME" value="pkServidor.RodaServidor" />
       <module name="aps2018" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-    </configuration>
-    <configuration name="TesteNomeClasse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="pkTestes.TesteNomeClasse" />
-      <module name="aps2018" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pkTestes.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
     </configuration>
     <configuration name="TesteScrollPane" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pkTestes.TesteScrollPane" />
@@ -285,19 +297,19 @@
     <list>
       <item itemvalue="Application.RodaCliente" />
       <item itemvalue="Application.RodaServidor" />
-      <item itemvalue="Application.TesteNomeClasse" />
       <item itemvalue="Application.Mensagem" />
       <item itemvalue="Application.NovaInterface" />
       <item itemvalue="Application.MainGUICliente" />
       <item itemvalue="Application.TesteScrollPane" />
+      <item itemvalue="Application.Foo" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Foo" />
         <item itemvalue="Application.MainGUICliente" />
         <item itemvalue="Application.TesteScrollPane" />
         <item itemvalue="Application.NovaInterface" />
         <item itemvalue="Application.Mensagem" />
-        <item itemvalue="Application.TesteNomeClasse" />
       </list>
     </recent_temporary>
   </component>
@@ -326,8 +338,8 @@
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5007353" side_tool="true" weight="0.30794165" />
       <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.3296875" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49926472" weight="0.30794165" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.3296875" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="6" />
@@ -336,8 +348,8 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39708266" />
+      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -349,14 +361,14 @@
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.3296875" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30903327" />
       <window_info anchor="right" id="Theme Preview" order="6" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20735294" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30903327" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.3296875" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="6" />
       <window_info id="UI Designer" order="2" />
@@ -383,16 +395,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/pkCliente/TratadorMsgServidor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="39" lean-forward="true" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pkCliente/SocketCliente.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -613,13 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkServidor/RodaServidor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pkCliente/InterfaceGUICliente.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -641,34 +636,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkCliente/RodaCliente.java">
+    <entry file="file://$PROJECT_DIR$/src/pkServidor/RodaServidor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="170">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pkCliente/ChatWindow.java">
+    <entry file="file://$PROJECT_DIR$/src/pkCliente/RodaCliente.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="78" column="43" selection-start-line="78" selection-start-column="43" selection-end-line="78" selection-end-column="43" />
+        <state relative-caret-position="646">
+          <caret line="50" column="37" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pkCliente/TratadorMsgServidor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        <state relative-caret-position="170">
+          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pkTestes/Foo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="25" column="36" lean-forward="true" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/pkCliente/ChatWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/pkCliente/MainGUICliente.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="39" column="21" lean-forward="true" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+        <state relative-caret-position="127">
+          <caret line="198" column="53" lean-forward="true" selection-start-line="198" selection-start-column="53" selection-end-line="198" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

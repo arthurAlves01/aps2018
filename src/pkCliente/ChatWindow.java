@@ -36,11 +36,11 @@ public class ChatWindow extends JPanel {
 
         this.scrollConversa = new JScrollPane(wrapConversa, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollConversa.setBorder(null);
-        this.scrollConversa.setPreferredSize(new Dimension(465,170));
+        this.scrollConversa.setPreferredSize(new Dimension(470,155));
 
         this.scrollInput = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.scrollInput.setBorder(null);
-        this.scrollInput.setPreferredSize(new Dimension(465,170));
+        //this.scrollInput.setPreferredSize(new Dimension(465,170));
 
         this.inputMensagem = new JTextArea(1, 25);
         this.inputMensagem.setLineWrap(true);
@@ -69,6 +69,7 @@ public class ChatWindow extends JPanel {
         btnEnviarMensagem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(inputMensagem.getText().equals("")) return;
                 Mensagem mensagemDeSaida = new Mensagem(RodaCliente.getUsuarioSocket(), destino, inputMensagem.getText());
                 janelaPrincipal.enviarMensagem(mensagemDeSaida);
                 addMensagem(mensagemDeSaida);
@@ -83,6 +84,7 @@ public class ChatWindow extends JPanel {
     }
     private void addMensagemTexto(Mensagem msg) {
         StringBuffer textoDeExib;
+        JLabel labelTexto = new JLabel();
         textoDeExib = new StringBuffer();
         String timeStampFormatado = new SimpleDateFormat("HH:mm").format(msg.getTimeStamp());
         textoDeExib.append("(");
@@ -90,11 +92,18 @@ public class ChatWindow extends JPanel {
         textoDeExib.append(") ");
         if(msg.getOrigem().equals(RodaCliente.getUsuarioSocket())) {
             textoDeExib.append("Você disse: ");
+            labelTexto.setFont(new Font(labelTexto.getFont().getName(), Font.BOLD, labelTexto.getFont().getSize()));
         } else {
             textoDeExib.append(msg.getOrigem() + " disse: ");
         }
-
         textoDeExib.append(msg.getMensagem());
-        conversa.add(new JLabel(textoDeExib.toString()));
+        labelTexto.setText(textoDeExib.toString());
+        conversa.add(labelTexto);
+    }
+    public void addAlerta(String alerta) {
+        JLabel labelAlerta = new JLabel(alerta);
+        labelAlerta.setForeground(Color.red);
+        conversa.add(labelAlerta);
+        conversa.revalidate();
     }
 }
