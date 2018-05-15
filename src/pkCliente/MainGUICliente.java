@@ -11,107 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runnable, MouseListener, WindowListener {
-    //Métodos da interface
-    public void conectar(){
-        String usuario = this.inputNomeUsuario.getText();
-        matcherUsuario = PADRAO_USUARIO.matcher(usuario);
-        if(!matcherUsuario.find()) {
-            alerta("O nome de usuário de iniciar com letra, conter pelo menos 4 caracteres e ser composto apenas de letras e números! ");
-        } else {
-            RodaCliente.estabelecerConn("127.0.0.1", 12345, usuario);
-        }
-    }
-    public void desconectar(){
-        desabilitarCampos();
-        lista.repaint();
-        lista.revalidate();
-        lista.validate();
-    }
-    public void enviarMensagem(Mensagem msg){
-        RodaCliente.enviaMensagemParaSocket(msg);
-    }
-    public void exibirMensagem(Mensagem msg){
-        String origem;
-        origem = msg.getDestino().equals("\\all")?"\\all":msg.getOrigem();
-        if(listaChatsAtivos.get(origem)==null) {
-            listaChatsAtivos.put(origem, addConversa(origem));
-        }
-        if(!msg.getOrigem().equals(RodaCliente.getUsuarioSocket()))
-            listaChatsAtivos.get(origem).addMensagem(msg);
-    }
-    public void atualizarLista(Mensagem msg){
-        ArrayList<String> listaAtualizada = (ArrayList<String>)msg.getMensagem();
-        if(msg.getOrigem()!=null) {
-            delClienteLista(msg.getOrigem());
-        }
-        for(String nome: listaAtualizada) {
-            if(nome.equals(RodaCliente.getUsuarioSocket())) continue;
-            if(listaChats.get(nome)==null) {
-                addClienteLista(nome);
-            }
-        }
-    }
-    private void addClienteLista(String nome) {
-        if(listaChatsAtivos.get(nome)!=null) {
-            listaChatsAtivos.get(nome).sinalizaConnCliente(nome);
-        }
-        JLabel labelCliente;
-        labelCliente = new JLabel(nome);
-        labelCliente.addMouseListener(this);
-        listaChats.put(nome, new ChatWindow(this, nome));
-        lista.add(labelCliente);
-        lista.repaint();
-        lista.revalidate();
-        lista.validate();
-    }
-    private void delClienteLista(String nome) {
-        for(Component labelNome: lista.getComponents()) {
-            if(((JLabel)labelNome).getText().equals(nome)) {
-                listaChats.remove(nome);
-                lista.remove(labelNome);
-                lista.repaint();
-                lista.revalidate();
-                lista.validate();
-                break;
-            }
-        }
-        if(listaChatsAtivos.get(nome)!=null) {
-            listaChatsAtivos.get(nome).sinalizaDcCliente(nome);
-        }
-    }
-    public void deletaChat(String contato) {
-        listaChatsAtivos.remove(contato);
-        for(int i = 0;i < wrapConversas.getTabCount();i++) {
-            wrapConversas.removeTabAt(wrapConversas.getSelectedIndex());
-        }
-    }
-    public void habilitarCampos(){
-        btnConectar.setEnabled(false);
-        btnDesconectar.setEnabled(true);
-        inputNomeUsuario.setEnabled(false);
-        addClienteLista("\\all");
-    }
-    public void desabilitarCampos(){
-        listaChatsAtivos.clear();
-        listaChats.clear();
-        lista.removeAll();
-        wrapConversas.removeAll();
-        lista.revalidate();
-        lista.repaint();
-        btnConectar.setEnabled(true);
-        btnDesconectar.setEnabled(false);
-        inputNomeUsuario.setEnabled(true);
-    }
-    public void atualizaConversas(){}
-    public void alerta(String texto){
-        JOptionPane.showMessageDialog(null, texto);
-    };
-    public ChatWindow addConversa(String contato) {
-        ChatWindow chatWin = listaChats.get(contato);
-        wrapConversas.add(contato, chatWin);
-        return chatWin;
-    }
-
     //Propriedads diversas da janela
     private final Pattern PADRAO_USUARIO = Pattern.compile("^[A-Za-z][A-Za-z0-9]{3,}$");
     private Matcher matcherUsuario;
@@ -134,6 +33,124 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
     //Declaroções dos componentes do campo com as janelas de conversas
     private JTabbedPane wrapConversas;
 
+    //Métodos da interface InterfaceGUICliente
+    public void conectar(){
+        //Cria o socket e conecta com o servidor
+        String usuario = this.inputNomeUsuario.getText();
+        matcherUsuario = PADRAO_USUARIO.matcher(usuario);
+        if(!matcherUsuario.find()) {
+            alerta("O nome de usuário de iniciar com letra, conter pelo menos 4 caracteres e ser composto apenas de letras e números! ");
+        } else {
+            //Conecta no host e porta informados passando o conteudo do inputUsuario como parãmetro
+            RodaCliente.estabelecerConn("127.0.0.1", 12345, usuario);
+        }
+    }
+    public void desconectar(){
+        //Encerra conexão dom o servidor
+        RodaCliente.encerrarConn();
+        desabilitarCampos();
+    }
+    public void enviarMensagem(Mensagem msg){
+        RodaCliente.enviaMensagemParaSocket(msg);
+    }
+    public void exibirMensagem(Mensagem msg){
+        //Lê a origem da mensagem e direciona a janela correta
+        String origem;
+        //Se tiver como destino o \all (broadcast) envia para a janela correta
+        origem = msg.getDestino().equals("\\all")?"\\all":msg.getOrigem();
+        if(listaChatsAtivos.get(origem)==null) {
+            //Cria a janela para a origem caso não exista
+            listaChatsAtivos.put(origem, addConversa(origem));
+        }
+
+        if(!msg.getOrigem().equals(RodaCliente.getUsuarioSocket())) {
+            //Em caso de broadcast valida se a mensagem não é do proprio usuário antes de mostrar na tela
+            listaChatsAtivos.get(origem).addMensagem(msg);
+        }
+    }
+    public void atualizarLista(Mensagem msg){
+        //Metódo chamado pelo RodaCliente, atualiza a lista de clientes conectados
+        ArrayList<String> listaAtualizada = (ArrayList<String>)msg.getMensagem();
+        if(msg.getOrigem()!=null) {
+            //Caso a atualização tenha origem da desconexão de um cliente chama metódo que exclui a label do usuário informado
+            delClienteLista(msg.getOrigem());
+        }
+        for(String nome: listaAtualizada) {
+            //Pula caso seja o nome do proprio cliente
+            if(nome.equals(RodaCliente.getUsuarioSocket())) continue;
+            if(listaChats.get(nome)==null) {
+                //Se o usuário não estiver na lista, inclui no final
+                addClienteLista(nome);
+            }
+        }
+    }
+    private void addClienteLista(String nome) {
+        //Cria a label e inclui no panel com a lista dos usuároios ativos
+        if(listaChatsAtivos.get(nome)!=null) {
+            listaChatsAtivos.get(nome).sinalizaConnCliente(nome);
+        }
+        JLabel labelCliente;
+        labelCliente = new JLabel(nome);
+        labelCliente.addMouseListener(this);
+        //Inclui na lista de chatas a adiciona a ChatWindow na tabela interna
+        listaChats.put(nome, new ChatWindow(this, nome));
+        lista.add(labelCliente);
+        lista.repaint();
+        lista.revalidate();
+        lista.validate();
+    }
+    private void delClienteLista(String nome) {
+        //Acessa os componentes da lista até encontrar o será deletado
+        for(Component labelNome: lista.getComponents()) {
+            if(((JLabel)labelNome).getText().equals(nome)) {
+                listaChats.remove(nome);
+                lista.remove(labelNome);
+                lista.repaint();
+                lista.revalidate();
+                lista.validate();
+                break;
+            }
+        }
+        if(listaChatsAtivos.get(nome)!=null) {
+            //Se o usuário tiver uma janela ativa envia alerta informando a desconexão
+            listaChatsAtivos.get(nome).sinalizaDcCliente(nome);
+        }
+    }
+    public void deletaChat(String contato) {
+        //Deleta a conversa ativa
+        wrapConversas.removeTabAt(wrapConversas.getSelectedIndex());
+    }
+    public void habilitarCampos(){
+        //Metódo chamado quando o servidor responde Ok para o nome de usuário (CONN_OK)
+        //Habilita os campos e adiciona o \all a lista de usuários
+        btnConectar.setEnabled(false);
+        btnDesconectar.setEnabled(true);
+        inputNomeUsuario.setEnabled(false);
+        addClienteLista("\\all");
+    }
+    public void desabilitarCampos(){
+        //Limpa as tabelas de usuários e desabilita os campos
+        listaChatsAtivos.clear();
+        listaChats.clear();
+        lista.removeAll();
+        wrapConversas.removeAll();
+        btnConectar.setEnabled(true);
+        btnDesconectar.setEnabled(false);
+        inputNomeUsuario.setEnabled(true);
+        lista.repaint();
+        lista.revalidate();
+    }
+    public void alerta(String texto){
+        //Exibe pop-up
+        JOptionPane.showMessageDialog(null, texto);
+    };
+    public ChatWindow addConversa(String contato) {
+        //Adiciona um chat a tela - Chamado quando nome do usuário recebe clique duplo na lista
+        ChatWindow chatWin = listaChats.get(contato);
+        wrapConversas.add(contato, chatWin);
+        return chatWin;
+    }
+
     public void run() { initGUI(); }
     public void initGUI() {
         //Declaração dos layouts
@@ -142,7 +159,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         FlowLayout flowL1 = new FlowLayout(FlowLayout.LEFT);
         GridBagLayout gridBagL1 = new GridBagLayout();
         //Inicialização principal do frame
-        this.setTitle("Chat APS Reder");
+        this.setTitle("Chat APS Redes");
         this.setMinimumSize(new Dimension(645,350));
         this.setMaximumSize(new Dimension(645,350));
         this.setResizable(false);
@@ -179,7 +196,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         wrapListaUsuarios = new JPanel();
         wrapListaUsuarios.setLayout(gridBagL1);
         bordaComTitulo = BorderFactory.createLineBorder(new Color(128,128,128));
-        bordaComTitulo = BorderFactory.createTitledBorder(bordaComTitulo, "Clientes");
+        bordaComTitulo = BorderFactory.createTitledBorder(bordaComTitulo, "Usuários");
         wrapListaUsuarios.setBorder(bordaComTitulo);
 
         lista = new JPanel();
@@ -247,6 +264,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
 
             }
         });
+        //Instancia as tabelas internas
         listaChats = new HashMap<>();
         listaChatsAtivos = new HashMap<>();
         //Adiciona os panels no frame principal
@@ -291,6 +309,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
 
     }
     private void setFontePadrao (java.awt.Font f){
+        //Altera a fonte dos componentes da tela
         java.util.Enumeration keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
@@ -307,6 +326,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
 
     @Override
     public void windowClosing(WindowEvent e) {
+        //Evento quando fecha a tela
         RodaCliente.encerrarConn();
     }
 

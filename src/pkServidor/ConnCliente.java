@@ -86,8 +86,10 @@ public class ConnCliente implements Runnable {
         }
         try {
             this.cliente.close();
+            System.out.println("Porta fechada!");
         } catch (IOException ioe) {
             //ioe.printStackTrace();
+            System.out.println("Erro em fechar socket do cliente: " + this.getNomeUsuario());
         }
     }
 }

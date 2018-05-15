@@ -2,7 +2,6 @@ package pkCliente;
 
 import pkAux.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class RodaCliente {
     static private MainGUICliente cl1;
@@ -15,10 +14,10 @@ public class RodaCliente {
         cl1 = new MainGUICliente();
         threadInterface = new Thread(cl1, "interface");
         threadInterface.start();
-        //cl1.exibirMensagem(new Mensagem("","","Hello World!"));
     }
 
     public static void estabelecerConn(String host, int porta, String usuario) {
+        //Cria a conexão com o servidor se o estado estiver false
         if(!getEstadoConn()) {
             sk1 = new SocketCliente(host, porta, usuario);
             threadSocket = new Thread(sk1, "conexao");
@@ -33,6 +32,7 @@ public class RodaCliente {
     }
 
     public static void enviaParaInterface(Mensagem msg) {
+        //Decide qual metódo da interface será executado quando recebe uma mensagem
         if(msg.getTipoMsg()==TipoMensagem.LISTA_CLIENTES) {
             cl1.atualizarLista(msg);
         } else {
@@ -49,6 +49,7 @@ public class RodaCliente {
         cl1.desabilitarCampos();
     }
     public static void encerrarConn() {
+        //Se estiver conectado envia informação para o servidor e fecha o socket
         if(getEstadoConn()) {
             try {
                 Mensagem dc = new Mensagem(TipoMensagem.DC);
@@ -56,7 +57,6 @@ public class RodaCliente {
                 sk1.getSocket().close();
                 setEstadoConn(false);
                 desabilitaCamposInterface();
-                //threadSocket.interrupt();
                 System.out.println("Desconectado com sucesso!");
             } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -64,9 +64,11 @@ public class RodaCliente {
         }
     }
     public static String getUsuarioSocket() {
+        //Retorna o nome do usuário
         return sk1.getNomeUsuario();
     }
     public static void enviarAlerta(String mensagem) {
+        //Envia um alerta para a interface
         cl1.alerta(mensagem);
     }
 
