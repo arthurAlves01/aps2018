@@ -3,7 +3,6 @@ package pkCliente;
 import pkAux.Mensagem;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -19,15 +18,11 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         if(!matcherUsuario.find()) {
             alerta("O nome de usuário de iniciar com letra, conter pelo menos 4 caracteres e ser composto apenas de letras e números! ");
         } else {
-            RodaCliente.estabelecerConn("192.168.0.6", 12345, usuario);
+            RodaCliente.estabelecerConn("127.0.0.1", 12345, usuario);
         }
     }
     public void desconectar(){
-        RodaCliente.encerrarConn();
         desabilitarCampos();
-        for(Component labelNome: lista.getComponents()) {
-            lista.remove(labelNome);
-        }
         lista.repaint();
         lista.revalidate();
         lista.validate();
@@ -39,9 +34,6 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         String origem;
         origem = msg.getDestino().equals("\\all")?"\\all":msg.getOrigem();
         if(listaChatsAtivos.get(origem)==null) {
-            if(listaChatsAtivos.isEmpty()) {
-                ((TitledBorder)wrapConversas.getBorder()).setTitle("Conversa com " + origem + ":");
-            }
             listaChatsAtivos.put(origem, addConversa(origem));
         }
         if(!msg.getOrigem().equals(RodaCliente.getUsuarioSocket()))
@@ -51,7 +43,6 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         ArrayList<String> listaAtualizada = (ArrayList<String>)msg.getMensagem();
         if(msg.getOrigem()!=null) {
             delClienteLista(msg.getOrigem());
-            System.out.println(msg.getOrigem());
         }
         for(String nome: listaAtualizada) {
             if(nome.equals(RodaCliente.getUsuarioSocket())) continue;
@@ -61,6 +52,9 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         }
     }
     private void addClienteLista(String nome) {
+        if(listaChatsAtivos.get(nome)!=null) {
+            listaChatsAtivos.get(nome).sinalizaConnCliente(nome);
+        }
         JLabel labelCliente;
         labelCliente = new JLabel(nome);
         labelCliente.addMouseListener(this);
@@ -73,7 +67,8 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
     private void delClienteLista(String nome) {
         for(Component labelNome: lista.getComponents()) {
             if(((JLabel)labelNome).getText().equals(nome)) {
-                lista.remove((labelNome));
+                listaChats.remove(nome);
+                lista.remove(labelNome);
                 lista.repaint();
                 lista.revalidate();
                 lista.validate();
@@ -81,7 +76,13 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
             }
         }
         if(listaChatsAtivos.get(nome)!=null) {
-            listaChatsAtivos.get(nome).addAlerta(nome + " desconectou!");
+            listaChatsAtivos.get(nome).sinalizaDcCliente(nome);
+        }
+    }
+    public void deletaChat(String contato) {
+        listaChatsAtivos.remove(contato);
+        for(int i = 0;i < wrapConversas.getTabCount();i++) {
+            wrapConversas.removeTabAt(wrapConversas.getSelectedIndex());
         }
     }
     public void habilitarCampos(){
@@ -93,12 +94,8 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
     public void desabilitarCampos(){
         listaChatsAtivos.clear();
         listaChats.clear();
-        for(Component c: lista.getComponents()) {
-            lista.remove(c);
-        }
-        for(Component c: wrapConversas.getComponents()) {
-            //wrapConversas.remove(c);
-        }
+        lista.removeAll();
+        wrapConversas.removeAll();
         lista.revalidate();
         lista.repaint();
         btnConectar.setEnabled(true);
@@ -112,10 +109,6 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
     public ChatWindow addConversa(String contato) {
         ChatWindow chatWin = listaChats.get(contato);
         wrapConversas.add(contato, chatWin);
-        //((CardLayout)wrapConversas.getLayout()).addLayoutComponent(chatWin, contato);
-        //wrapConversas.repaint();
-        //wrapConversas.revalidate();
-        //wrapConversas.validate();
         return chatWin;
     }
 
@@ -149,7 +142,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         FlowLayout flowL1 = new FlowLayout(FlowLayout.LEFT);
         GridBagLayout gridBagL1 = new GridBagLayout();
         //Inicialização principal do frame
-        this.setTitle("QuiChat");
+        this.setTitle("Chat APS Reder");
         this.setMinimumSize(new Dimension(645,350));
         this.setMaximumSize(new Dimension(645,350));
         this.setResizable(false);
@@ -171,6 +164,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
         //Inicializa componentes do panel acima
         nomeUsuario = new JLabel("Nome de usuário:");
         inputNomeUsuario = new JTextField(15);
+        inputNomeUsuario.setDisabledTextColor(Color.BLACK);
         btnConectar = new JButton("Conectar");
         btnDesconectar = new JButton("Desconectar");
         btnDesconectar.setEnabled(false);
@@ -202,9 +196,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
 
         //Criação dos componentes da janela contendo as conversas
         wrapConversas = new JTabbedPane();
-        bordaComTitulo = BorderFactory.createLineBorder(new Color(255,0,0));
         wrapConversas.setBorder(null);
-        //wrapConversas.setPreferredSize(new Dimension(100,100));
 
         //--------------------------------------
 
@@ -274,8 +266,6 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
             if(listaChatsAtivos.get(contatoSelecionado)==null) {
                 listaChatsAtivos.put(contatoSelecionado, addConversa(contatoSelecionado));
             }
-            //((CardLayout)wrapConversas.getLayout()).show(wrapConversas, contatoSelecionado);
-            //((TitledBorder)wrapConversas.getBorder()).setTitle("Conversa com " + contatoSelecionado + ":");
             wrapConversas.revalidate();
             wrapConversas.repaint();
         }
@@ -317,7 +307,7 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
 
     @Override
     public void windowClosing(WindowEvent e) {
-        desconectar();
+        RodaCliente.encerrarConn();
     }
 
     @Override

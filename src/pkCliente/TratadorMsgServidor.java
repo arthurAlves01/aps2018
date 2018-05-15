@@ -27,7 +27,6 @@ class TratadorMsgServidor implements Runnable {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        System.out.println("Timer finalizado!");
                         timeout = false;
                     }
                 },
@@ -42,7 +41,7 @@ class TratadorMsgServidor implements Runnable {
                     RodaCliente.enviarAlerta("Conectado com sucesso!");
                     break;
                 } else if(msg.getTipoMsg()==TipoMensagem.DC) {
-                    System.out.println("Nome de usuário em uso!");
+                    RodaCliente.enviarAlerta("Nome de usuário em uso!");
                     break;
                 } else {
 
@@ -64,7 +63,7 @@ class TratadorMsgServidor implements Runnable {
                 e.printStackTrace();
             } catch (IOException ioe) {
                 sinalizarDC();
-                ioe.printStackTrace();
+                //ioe.printStackTrace();
             }
         }
     }
