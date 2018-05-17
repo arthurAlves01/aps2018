@@ -1,6 +1,8 @@
 package pkServidor;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -18,8 +20,19 @@ public class SocketServidor {
     }
 
     public void executa() throws IOException  {
+        String ip = "127.0.0.1";
         try(ServerSocket servidor = new ServerSocket(this.porta)){
-            System.out.println("Porta 12345 aberta!");
+            Enumeration en = NetworkInterface.getNetworkInterfaces();
+            while(en.hasMoreElements()) {
+                NetworkInterface ni = (NetworkInterface) en.nextElement();
+                Enumeration ee = ni.getInetAddresses();
+                while(ee.hasMoreElements()) {
+                    InetAddress ia = (InetAddress) ee.nextElement();
+                    if(ia.getHostAddress().toString().substring(0,2).equals("19"))
+                        ip = ia.getHostAddress();
+                }
+            }
+            System.out.println("Servidor rodando em: " + ip + ":" + this.porta);
 
             while (true) {
                 Socket cliente = servidor.accept();

@@ -1,6 +1,5 @@
 package pkAux;
 
-import pkServidor.*;
 import java.util.*;
 import java.awt.*;
 import java.io.Serializable;

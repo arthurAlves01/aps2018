@@ -35,14 +35,21 @@ public class MainGUICliente extends JFrame implements InterfaceGUICliente, Runna
 
     //Métodos da interface InterfaceGUICliente
     public void conectar(){
+        String[] infoConn;
+        String host;
+        int porta;
         //Cria o socket e conecta com o servidor
         String usuario = this.inputNomeUsuario.getText();
         matcherUsuario = PADRAO_USUARIO.matcher(usuario);
         if(!matcherUsuario.find()) {
             alerta("O nome de usuário de iniciar com letra, conter pelo menos 4 caracteres e ser composto apenas de letras e números! ");
         } else {
-            //Conecta no host e porta informados passando o conteudo do inputUsuario como parãmetro
-            RodaCliente.estabelecerConn("127.0.0.1", 12345, usuario);
+            infoConn = JOptionPane.showInputDialog(null, "Informe o IP e a porta do servidor separados por \":\" (eg. 127.0.0.1:12345)").split(":");
+            if(infoConn.length!=2) {
+                JOptionPane.showMessageDialog(null, "Parâmetros inválidos!");
+            } else {
+                RodaCliente.estabelecerConn(infoConn[0], Integer.parseInt(infoConn[1]), usuario);
+            }
         }
     }
     public void desconectar(){
